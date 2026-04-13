@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Editable MPEN & ECEN Timetable</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f6f9;
+        padding: 20px;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    .btn {
+        margin: 10px 5px;
+        padding: 10px 15px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        color: white;
+    }
+
+    .save { background: #28a745; }
+    .clear { background: #dc3545; }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+    }
+
+    th, td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: center;
+    }
+
+    th {
+        background: #007BFF;
+        color: white;
+    }
+
+    td {
+        cursor: pointer;
+    }
+
+    td:focus {
+        outline: 2px solid #007BFF;
+        background: #eef;
+    }
+
+    @media print {
+        .btn { display: none; }
+    }
+</style>
+</head>
+
+<body>
+
+<h2>Editable MPEN & ECEN Exam Timetable</h2>
+
+<div style="text-align:center;">
+    <button class="btn save" onclick="savePDF()">Save as PDF</button>
+    <button class="btn clear" onclick="clearData()">Clear Data</button>
+</div>
+
+<table id="timetable">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Unit Code</th>
+            <th>Unit Title</th>
+            <th>Venue</th>
+            <th>Invigilators</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td contenteditable="true">14/04/2026</td>
+            <td contenteditable="true">9:00 AM - 12:30 PM</td>
+            <td contenteditable="true">MPEN 425</td>
+            <td contenteditable="true">Production Planning</td>
+            <td contenteditable="true">BS 15</td>
+            <td contenteditable="true">Omenda, Ogolla</td>
+        </tr>
+
+        <tr>
+            <td contenteditable="true">14/04/2026</td>
+            <td contenteditable="true">2:00 PM - 5:00 PM</td>
+            <td contenteditable="true">ECEN 424</td>
+            <td contenteditable="true">Drinking Water Supply</td>
+            <td contenteditable="true">ED13</td>
+            <td contenteditable="true">Matuku, Anna</td>
+        </tr>
+
+        <tr>
+            <td contenteditable="true">14/04/2026</td>
+            <td contenteditable="true">2:00 PM - 5:00 PM</td>
+            <td contenteditable="true">ECEN 427</td>
+            <td contenteditable="true">Instrumentation</td>
+            <td contenteditable="true">D9 12</td>
+            <td contenteditable="true">Wekesa, Seeren</td>
+        </tr>
+
+        <tr>
+            <td contenteditable="true">17/04/2026</td>
+            <td contenteditable="true">9:00 AM - 12:30 PM</td>
+            <td contenteditable="true">MPEN 429</td>
+            <td contenteditable="true">Foundry Technology</td>
+            <td contenteditable="true">BS 13</td>
+            <td contenteditable="true">Omenda, Ogolla</td>
+        </tr>
+
+        <tr>
+            <td contenteditable="true">20/04/2026</td>
+            <td contenteditable="true">9:00 AM - 12:30 PM</td>
+            <td contenteditable="true">MPEN 426</td>
+            <td contenteditable="true">Jig and Fixture Design</td>
+            <td contenteditable="true">BS 19</td>
+            <td contenteditable="true">Kisang, Kiptoo</td>
+        </tr>
+
+        <tr>
+            <td contenteditable="true">22/04/2026</td>
+            <td contenteditable="true">2:00 PM - 5:00 PM</td>
+            <td contenteditable="true">MPEN 421</td>
+            <td contenteditable="true">Design of Machine Elements II</td>
+            <td contenteditable="true">BS 16</td>
+            <td contenteditable="true">Nyangao, Ogolla</td>
+        </tr>
+
+        <tr>
+            <td contenteditable="true">23/04/2026</td>
+            <td contenteditable="true">9:00 AM - 12:30 PM</td>
+            <td contenteditable="true">MPEN 422</td>
+            <td contenteditable="true">Plasticity</td>
+            <td contenteditable="true">BS 15</td>
+            <td contenteditable="true">Koech, Tarus</td>
+        </tr>
+
+        <tr>
+            <td contenteditable="true">24/04/2026</td>
+            <td contenteditable="true">9:00 AM - 12:30 PM</td>
+            <td contenteditable="true">MPEN 428</td>
+            <td contenteditable="true">Automotive Engineering II</td>
+            <td contenteditable="true">BS 12</td>
+            <td contenteditable="true">Kibet, Tarus</td>
+        </tr>
+    </tbody>
+</table>
+
+<script>
+// Save to localStorage automatically
+const table = document.getElementById("timetable");
+
+function saveData() {
+    localStorage.setItem("timetableData", table.innerHTML);
+}
+
+function loadData() {
+    const data = localStorage.getItem("timetableData");
+    if (data) table.innerHTML = data;
+}
+
+// Save whenever user edits
+table.addEventListener("input", saveData);
+
+// Load on start
+window.onload = loadData;
+
+// PDF
+function savePDF() {
+    window.print();
+}
+
+// Clear
+function clearData() {
+    if (confirm("Clear all data?")) {
+        localStorage.removeItem("timetableData");
+        location.reload();
+    }
+}
+</script>
+
+</body>
+</html>
